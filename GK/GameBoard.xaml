@@ -1,0 +1,24 @@
+﻿<Page x:Class="GK.GameBoard"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:GK"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Background="White"
+      Title="GameBoard">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.25*"/>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="0.25*"/>
+        </Grid.RowDefinitions>
+
+        <GroupBox Grid.Row="0" Header="Gracz 1"/>
+        <GroupBox Grid.Row="1" Header="Dostępne liczby"/>
+        <GroupBox Grid.Row="2" Header="Gracz 2"/>
+
+    </Grid>
+</Page>
