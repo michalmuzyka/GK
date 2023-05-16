@@ -7,5 +7,5 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
 
-    <Frame Name="MainFrame" Source="GameBoard.xaml" />
+    <Frame Name="MainFrame" Source="MainPage.xaml" NavigationUIVisibility="Hidden"/>
 </Window>
