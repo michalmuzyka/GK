@@ -11,14 +11,43 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.25*"/>
-            <RowDefinition Height="0.5*"/>
-            <RowDefinition Height="0.25*"/>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="0.9*"/>
         </Grid.RowDefinitions>
 
-        <GroupBox Grid.Row="0" Header="Gracz 1"/>
-        <GroupBox Grid.Row="1" Header="Dostępne liczby"/>
-        <GroupBox Grid.Row="2" Header="Gracz 2"/>
+        <Border BorderThickness="1" BorderBrush="Gray" Grid.Row="1" Margin="10">
+            <ListView ItemsSource="{Binding Numbers}"
+                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                      ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Button Margin="5" Width="50" Height="50" 
+                                Command="{Binding DataContext.SelectNumberCommand, RelativeSource = {RelativeSource AncestorType = Page }}" 
+                                CommandParameter="{Binding .}"
+                                Background="{Binding Player, Converter = {StaticResource playerToColorConverter }}">
+                            <Label Content="{Binding Number}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Button>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Width = "{ Binding ActualWidth, RelativeSource = {RelativeSource AncestorType = ListView }}" />
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListViewItem">
+                                    <ContentPresenter />
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
+        </Border>
+
 
     </Grid>
 </Page>

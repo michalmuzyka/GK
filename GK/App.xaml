@@ -11,5 +11,6 @@
             <Setter Property="Margin" Value="10"/>
         </Style>
 
+        <local:PlayerToColorConverter x:Key="playerToColorConverter" />
     </Application.Resources>
 </Application>

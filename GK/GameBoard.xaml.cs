@@ -20,13 +20,9 @@ namespace GK
     /// </summary>
     public partial class GameBoard : Page
     {
-        private Game game;
-
         public GameBoard(Game game)
         {
             InitializeComponent();
-        
-            this.game = game;
             this.DataContext = game;
         }
     }
