@@ -11,6 +11,10 @@
             <Setter Property="Margin" Value="10"/>
         </Style>
 
+        <local:IsNullConverter x:Key="isNullConverter" />
         <local:PlayerToColorConverter x:Key="playerToColorConverter" />
+        <local:WinningTileToColorConverter x:Key="winningTileToColorConverter" />
+        <local:WinningTileToBorderSizeConverter x:Key="winningTileToBorderSizeConverter" />
+        <local:PlayerToStringConverter x:Key="playerToStringConverter" />
     </Application.Resources>
 </Application>

@@ -11,22 +11,48 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="60"/>
             <RowDefinition Height="0.9*"/>
         </Grid.RowDefinitions>
 
-        <Border BorderThickness="1" BorderBrush="Gray" Grid.Row="1" Margin="10">
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Button Content="Wróć do menu" Click="Button_Click"/>
+
+            <StackPanel Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Label Content="{Binding CurrentPlayer, Converter = {StaticResource playerToStringConverter }}" FontSize="16" />
+            </StackPanel>
+
+        </Grid>
+
+        <Border BorderThickness="1" BorderBrush="Gray" Grid.Row="1" Margin="10 5 10 10">
             <ListView ItemsSource="{Binding Numbers}"
                       ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                       ScrollViewer.VerticalScrollBarVisibility="Disabled">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Button Margin="5" Width="50" Height="50" 
-                                Command="{Binding DataContext.SelectNumberCommand, RelativeSource = {RelativeSource AncestorType = Page }}" 
-                                CommandParameter="{Binding .}"
+                        <Border Margin="5" Width="50" Height="50" 
+                                BorderThickness="{Binding InWinningSequence, Converter = {StaticResource winningTileToBorderSizeConverter }}" 
                                 Background="{Binding Player, Converter = {StaticResource playerToColorConverter }}">
-                            <Label Content="{Binding Number}" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        </Button>
+                            <Label Content="{Binding Number}" 
+                                   HorizontalAlignment="Stretch" 
+                                   VerticalAlignment="Stretch" 
+                                   HorizontalContentAlignment="Center"
+                                   VerticalContentAlignment="Center"
+                                   MouseLeftButtonDown="Label_MouseLeftButtonDown" 
+                                   Tag="{Binding .}"/>
+                            <Border.BorderBrush>
+                                <MultiBinding Converter="{StaticResource winningTileToColorConverter }">
+                                    <Binding Path="InWinningSequence"/>
+                                    <Binding Path="Player"/>
+                                </MultiBinding>
+                            </Border.BorderBrush>
+                        </Border>
                     </DataTemplate>
                 </ListView.ItemTemplate>
                 <ListView.ItemsPanel>
@@ -47,7 +73,5 @@
                 </ListView.ItemContainerStyle>
             </ListView>
         </Border>
-
-
     </Grid>
 </Page>

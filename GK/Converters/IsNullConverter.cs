@@ -1,5 +1,4 @@
-﻿using GK.Logic;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -10,22 +9,15 @@ using System.Windows.Media;
 
 namespace GK;
 
-public class PlayerToColorConverter : IValueConverter
+public class IsNullConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        var converted = value as Player?;
-
-        return new SolidColorBrush(converted switch
-        {
-            Player.Player1 => Consts.FirstPlayerColor,
-            Player.Player2 => Consts.SecondPlayerColor,
-            _ => Colors.Transparent,
-        });
+        return (value == null);
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        throw new NotImplementedException();
+        throw new InvalidOperationException("IsNullConverter can only be used OneWay.");
     }
 }

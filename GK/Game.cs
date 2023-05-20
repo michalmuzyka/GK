@@ -11,18 +11,27 @@ using System.Threading.Tasks;
 namespace GK;
 
 public partial class Game : ObservableObject
-{ 
+{
     public GameMode GameMode { get; }
     public int X { get; }
     public int K { get; }
 
     [ObservableProperty()]
-    public Player currentPlayer;
+    public Player? currentPlayer;
 
     [ObservableProperty()]
     public ObservableCollection<GameNumber> numbers;
 
-    public Game(GameMode mode, int x, int k) 
+    [ObservableProperty()]
+    public GameStatus gameStatus;
+
+    [ObservableProperty()]
+    public Player? winner;
+
+    public bool IsGameFinished => GameStatus != GameStatus.OnGoing;
+
+
+    public Game(GameMode mode, int x, int k, int a, int b)
     {
         GameMode = mode;
         X = x;
@@ -30,20 +39,29 @@ public partial class Game : ObservableObject
 
         var random = new Random();
         currentPlayer = random.NextEnum<Player>();
-        numbers = new ObservableCollection<GameNumber>(Enumerable.Range(0, x).Select(n => new GameNumber() { Number = n }));
+        numbers = new ObservableCollection<GameNumber>(
+            Enumerable.Range(a, b - a + 1)
+            .OrderBy(n => random.Next())
+            .Take(x)
+            .Order()
+            .Select(n => new GameNumber() { Number = n }));
     }
 
     public void NextPlayer()
     {
-        CurrentPlayer = (Player)(((int)CurrentPlayer + 1) % Enum.GetValues(typeof(Player)).Length);
+        if (GameStatus == GameStatus.OnGoing)
+            CurrentPlayer = (Player)(((int)CurrentPlayer + 1) % 2);
+        else
+            CurrentPlayer = null;
     }
 
     [RelayCommand]
     public void SelectNumber(GameNumber gameNumber)
     {
         gameNumber.Player = CurrentPlayer;
+        (GameStatus, Winner) = BoardValidator.Validate(Numbers, K);
+
         NextPlayer();
     }
-
 
 }

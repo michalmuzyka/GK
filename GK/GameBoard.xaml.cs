@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GK.Logic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,10 +21,24 @@ namespace GK
     /// </summary>
     public partial class GameBoard : Page
     {
+        Game game;
         public GameBoard(Game game)
         {
             InitializeComponent();
+            this.game = game;
             this.DataContext = game;
+        }
+
+        private void Label_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var number = (GameNumber)((Label)sender).Tag;
+            if(number.Clickable)
+                game.SelectNumber(number);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.GoBack();
         }
     }
 }

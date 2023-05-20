@@ -22,7 +22,9 @@ namespace GK
     public partial class MainPage : Page
     {
         public int X { get; set; } = Consts.DefaultX;
-        public int K { get; set; } = Consts.DefaultK;
+        public int K { get; set; } = Consts.DefaultK;        
+        public int a { get; set; } = Consts.DefaultA;
+        public int b { get; set; } = Consts.DefaultB;
 
         public MainPage()
         {
@@ -32,12 +34,12 @@ namespace GK
 
         private void watchAiButton_Click(object sender, RoutedEventArgs e)
         {
-            StartGame(new Game(GameMode.WatchAi, X, K));
+            StartGame(new Game(GameMode.WatchAi, X, K, a, b));
         }
 
         private void playWithAiButton_Click(object sender, RoutedEventArgs e)
         {
-            StartGame(new Game(GameMode.PlayWithAi, X, K));
+            StartGame(new Game(GameMode.PlayWithAi, X, K, a, b));
         }
 
         private void StartGame(Game game)

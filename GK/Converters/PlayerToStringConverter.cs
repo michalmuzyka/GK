@@ -10,18 +10,18 @@ using System.Windows.Media;
 
 namespace GK;
 
-public class PlayerToColorConverter : IValueConverter
+public class PlayerToStringConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         var converted = value as Player?;
 
-        return new SolidColorBrush(converted switch
+        return converted switch
         {
-            Player.Player1 => Consts.FirstPlayerColor,
-            Player.Player2 => Consts.SecondPlayerColor,
-            _ => Colors.Transparent,
-        });
+            Player.Player1 => Consts.FirstPlayerName,
+            Player.Player2 => Consts.SecondPlayerName,
+            _ => string.Empty,
+        };
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

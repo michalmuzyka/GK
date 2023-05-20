@@ -21,8 +21,9 @@
 
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition  Width="0.5*"/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="0.5*"/>
+                <ColumnDefinition Width="0.5*"/>
+                <ColumnDefinition Width="0.5*"/>
             </Grid.ColumnDefinitions>
 
             <GroupBox Header="Ustawienia" Grid.Column="0" Margin="15">
@@ -43,6 +44,28 @@
                         </Grid.ColumnDefinitions>
                         <Label Grid.Column="0" Content="Parameter k:"/>
                         <xctk:IntegerUpDown Grid.Column="1" Value="{Binding Path=K}" Width="100" Minimum="1" Maximum="100" />
+                    </Grid>
+                </StackPanel>
+            </GroupBox>
+
+            <GroupBox Header="Ustawienia przedziału liczb &lt;a, b>" Grid.Column="1" Margin="15">
+                <StackPanel>
+                    <Grid Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="a:"/>
+                        <xctk:IntegerUpDown Grid.Column="1" Value="{Binding Path=a}" Minimum="1" Maximum="{Binding Path=b}" />
+                    </Grid>
+
+                    <Grid Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="b:"/>
+                        <xctk:IntegerUpDown Grid.Column="1" Value="{Binding Path=b}" Minimum="1" Maximum="100" />
                     </Grid>
                 </StackPanel>
             </GroupBox>

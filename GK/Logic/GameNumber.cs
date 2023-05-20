@@ -14,4 +14,9 @@ public partial class GameNumber : ObservableObject
 
     [ObservableProperty()]
     public Player? player;
+
+    [ObservableProperty()]
+    public bool inWinningSequence;
+
+    public bool Clickable => Player == null;
 }
