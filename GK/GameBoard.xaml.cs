@@ -29,11 +29,27 @@ namespace GK
             this.DataContext = game;
         }
 
+        private async void GameBoard_Loaded(object sender, RoutedEventArgs e)
+        {
+            switch(game.GameMode)
+            {
+                case GameMode.PlayWithAi:
+                    game.PlayWithAi();
+                    break;
+                case GameMode.WatchAi:
+                    await game.WatchAiGameAsync();
+                    break;
+            }
+        }
+
         private void Label_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            var number = (GameNumber)((Label)sender).Tag;
-            if(number.Clickable)
-                game.SelectNumber(number);
+            if (game.GameMode == GameMode.PlayWithAi)
+            {
+                var number = (GameNumber)((Label)sender).Tag;
+                if (number.Clickable)
+                    game.SelectNumber(number);
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

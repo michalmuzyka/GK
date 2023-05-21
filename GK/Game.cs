@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace GK;
@@ -47,12 +48,37 @@ public partial class Game : ObservableObject
             .Select(n => new GameNumber() { Number = n }));
     }
 
-    public void NextPlayer()
+    public async Task WatchAiGameAsync()
     {
-        if (GameStatus == GameStatus.OnGoing)
+        while (!IsGameFinished)
+        {
+            PlayNextAIMove();
+            await Task.Delay(1500);
+        }
+    }
+
+    public void PlayWithAi()
+    {
+        if (GameMode == GameMode.PlayWithAi && CurrentPlayer == Player.Player2)
+        {
+            PlayNextAIMove();
+        }
+    }
+
+    private void NextPlayer()
+    {
+        if (GameStatus == GameStatus.OnGoing && CurrentPlayer != null)
             CurrentPlayer = (Player)(((int)CurrentPlayer + 1) % 2);
         else
             CurrentPlayer = null;
+    }
+
+    private void PlayNextAIMove()
+    {
+        var number = Strategies.Random(Numbers);
+        number.Player = CurrentPlayer;
+        (GameStatus, Winner) = BoardValidator.Validate(Numbers, K);
+        NextPlayer();
     }
 
     [RelayCommand]
@@ -62,6 +88,6 @@ public partial class Game : ObservableObject
         (GameStatus, Winner) = BoardValidator.Validate(Numbers, K);
 
         NextPlayer();
+        PlayNextAIMove();
     }
-
 }

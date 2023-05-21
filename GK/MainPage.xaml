@@ -70,6 +70,32 @@
                 </StackPanel>
             </GroupBox>
 
+            <GroupBox Header="Ustawienia AI" Grid.Column="2" Margin="15">
+                <StackPanel>
+                    <Grid Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Gracz 1:"/>
+                        <ComboBox Grid.Column="1" SelectedIndex="0">
+                            <ComboBoxItem Content="Random"/>
+                        </ComboBox>
+                    </Grid>
+
+                    <Grid Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Gracz 2:"/>
+                        <ComboBox Grid.Column="1" SelectedIndex="0">
+                            <ComboBoxItem Content="Random"/>
+                        </ComboBox>
+                    </Grid>
+                </StackPanel>
+            </GroupBox>
+
         </Grid>
 
         <Grid Grid.Row="2">
