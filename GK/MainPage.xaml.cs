@@ -26,6 +26,9 @@ namespace GK
         public int a { get; set; } = Consts.DefaultA;
         public int b { get; set; } = Consts.DefaultB;
 
+        public Strategy FirstPlayerStrategy { get; set; }
+        public Strategy SecondPlayerStrategy { get; set; }
+        
         public MainPage()
         {
             InitializeComponent();
@@ -34,12 +37,12 @@ namespace GK
 
         private void watchAiButton_Click(object sender, RoutedEventArgs e)
         {
-            StartGame(new Game(GameMode.WatchAi, X, K, a, b));
+            StartGame(new Game(GameMode.WatchAi, X, K, a, b, FirstPlayerStrategy, SecondPlayerStrategy));
         }
 
         private void playWithAiButton_Click(object sender, RoutedEventArgs e)
         {
-            StartGame(new Game(GameMode.PlayWithAi, X, K, a, b));
+            StartGame(new Game(GameMode.PlayWithAi, X, K, a, b, FirstPlayerStrategy, SecondPlayerStrategy));
         }
 
         private void StartGame(Game game)

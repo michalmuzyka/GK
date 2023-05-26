@@ -25,3 +25,8 @@ public enum GameStatus
     Draw,
     Win
 }
+
+public enum Strategy
+{
+    Random
+}

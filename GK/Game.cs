@@ -17,6 +17,9 @@ public partial class Game : ObservableObject
     public int X { get; }
     public int K { get; }
 
+    public Strategy FirstPlayerStrategy { get; }
+    public Strategy SecondPlayerStrategy { get; }
+
     [ObservableProperty()]
     public Player? currentPlayer;
 
@@ -32,7 +35,7 @@ public partial class Game : ObservableObject
     public bool IsGameFinished => GameStatus != GameStatus.OnGoing;
 
 
-    public Game(GameMode mode, int x, int k, int a, int b)
+    public Game(GameMode mode, int x, int k, int a, int b, Strategy player1, Strategy player2)
     {
         GameMode = mode;
         X = x;
@@ -40,6 +43,9 @@ public partial class Game : ObservableObject
 
         var random = new Random();
         currentPlayer = random.NextEnum<Player>();
+        FirstPlayerStrategy = player1;
+        SecondPlayerStrategy = player2;
+
         numbers = new ObservableCollection<GameNumber>(
             Enumerable.Range(a, b - a + 1)
             .OrderBy(n => random.Next())

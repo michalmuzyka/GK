@@ -4,12 +4,23 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+      xmlns:System="clr-namespace:System;assembly=mscorlib"
       xmlns:local="clr-namespace:GK"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Background="White"
       Title="MainPage">
 
+    <Page.Resources>
+        <ObjectDataProvider x:Key="strategies" MethodName="GetValues"
+                            ObjectType="{x:Type System:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="local:Strategy"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        
+    </Page.Resources>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
@@ -78,9 +89,7 @@
                             <ColumnDefinition Width="3*"/>
                         </Grid.ColumnDefinitions>
                         <Label Grid.Column="0" Content="Gracz 1:"/>
-                        <ComboBox Grid.Column="1" SelectedIndex="0">
-                            <ComboBoxItem Content="Random"/>
-                        </ComboBox>
+                        <ComboBox Grid.Column="1" SelectedIndex="0" SelectedItem="{Binding FirstPlayerStrategy}" ItemsSource="{Binding Source={StaticResource strategies}}" />
                     </Grid>
 
                     <Grid Margin="10">
@@ -89,9 +98,7 @@
                             <ColumnDefinition Width="3*"/>
                         </Grid.ColumnDefinitions>
                         <Label Grid.Column="0" Content="Gracz 2:"/>
-                        <ComboBox Grid.Column="1" SelectedIndex="0">
-                            <ComboBoxItem Content="Random"/>
-                        </ComboBox>
+                        <ComboBox Grid.Column="1" SelectedIndex="0" SelectedItem="{Binding SecondPlayerStrategy}"  ItemsSource="{Binding Source={StaticResource strategies}}" />
                     </Grid>
                 </StackPanel>
             </GroupBox>
