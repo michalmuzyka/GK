@@ -26,7 +26,8 @@
             <Button Content="Wróć do menu" Click="Button_Click"/>
 
             <StackPanel Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Label Content="{Binding CurrentPlayer, Converter = {StaticResource playerToStringConverter }}" FontSize="16" />
+                <Label Content="{Binding CurrentPlayer, Converter = {StaticResource playerToStringConverter }}" Foreground="{Binding CurrentPlayer, Converter = {StaticResource playerToColorConverter }}" FontSize="16" />
+                <Label Content="{Binding CurrentStrategy, Converter = {StaticResource strategyToStringConverter }}" FontSize="16" />
             </StackPanel>
 
         </Grid>

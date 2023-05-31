@@ -16,5 +16,6 @@
         <local:WinningTileToColorConverter x:Key="winningTileToColorConverter" />
         <local:WinningTileToBorderSizeConverter x:Key="winningTileToBorderSizeConverter" />
         <local:PlayerToStringConverter x:Key="playerToStringConverter" />
+        <local:StrategyToStringConverter x:Key="strategyToStringConverter" />
     </Application.Resources>
 </Application>

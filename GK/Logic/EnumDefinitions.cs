@@ -28,5 +28,7 @@ public enum GameStatus
 
 public enum Strategy
 {
-    Random
+    Random,
+    TwoStep,
+    Blocking,
 }

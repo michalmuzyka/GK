@@ -17,11 +17,13 @@ public partial class Game : ObservableObject
     public int X { get; }
     public int K { get; }
 
-    public Strategy FirstPlayerStrategy { get; }
-    public Strategy SecondPlayerStrategy { get; }
+    public IDictionary<Player, Strategy> PlayerStrategies = new Dictionary<Player, Strategy>();
 
     [ObservableProperty()]
     public Player? currentPlayer;
+
+    [ObservableProperty()]
+    public Strategy? currentStrategy;
 
     [ObservableProperty()]
     public ObservableCollection<GameNumber> numbers;
@@ -43,15 +45,23 @@ public partial class Game : ObservableObject
 
         var random = new Random();
         currentPlayer = random.NextEnum<Player>();
-        FirstPlayerStrategy = player1;
-        SecondPlayerStrategy = player2;
+        PlayerStrategies[Player.Player1] = player1;
+        PlayerStrategies[Player.Player2] = player2;
 
-        numbers = new ObservableCollection<GameNumber>(
-            Enumerable.Range(a, b - a + 1)
-            .OrderBy(n => random.Next())
-            .Take(x)
-            .Order()
-            .Select(n => new GameNumber() { Number = n }));
+        currentStrategy = mode switch
+        {
+            GameMode.PlayWithAi => PlayerStrategies[Player.Player2],
+            GameMode.WatchAi => PlayerStrategies[currentPlayer!.Value],
+            _ => null
+        };
+
+        var nums = new List<GameNumber>();
+        for (int i = 0; i < x; i++)
+        {
+            nums.Add(new GameNumber() { Number = random.Next(a, b + 1)});
+        }
+
+        numbers = new(nums.OrderBy(n => n.Number));
     }
 
     public async Task WatchAiGameAsync()
@@ -74,14 +84,30 @@ public partial class Game : ObservableObject
     private void NextPlayer()
     {
         if (GameStatus == GameStatus.OnGoing && CurrentPlayer != null)
+        {
             CurrentPlayer = (Player)(((int)CurrentPlayer + 1) % 2);
+            if (GameMode == GameMode.WatchAi)
+            {
+                CurrentStrategy = PlayerStrategies[CurrentPlayer!.Value];
+            }
+        }
         else
+        {
             CurrentPlayer = null;
+            CurrentStrategy = null;
+        }
     }
 
     private void PlayNextAIMove()
     {
-        var number = Strategies.Random(Numbers);
+        var number = PlayerStrategies[CurrentPlayer!.Value] switch
+        {
+            Strategy.Random => Strategies.Random(Numbers),
+            Strategy.TwoStep => Strategies.TwoStep(Numbers, CurrentPlayer.Value),
+            Strategy.Blocking => Strategies.Blocking(Numbers, CurrentPlayer.Value),
+            _ => throw new ArgumentOutOfRangeException(nameof(Strategy)),
+        };
+
         number.Player = CurrentPlayer;
         (GameStatus, Winner) = BoardValidator.Validate(Numbers, K);
         NextPlayer();
@@ -93,7 +119,10 @@ public partial class Game : ObservableObject
         gameNumber.Player = CurrentPlayer;
         (GameStatus, Winner) = BoardValidator.Validate(Numbers, K);
 
-        NextPlayer();
-        PlayNextAIMove();
+        if (GameStatus == GameStatus.OnGoing)
+        {
+            NextPlayer();
+            PlayNextAIMove();
+        }
     }
 }

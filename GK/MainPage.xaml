@@ -100,6 +100,12 @@
                         <Label Grid.Column="0" Content="Gracz 2:"/>
                         <ComboBox Grid.Column="1" SelectedIndex="0" SelectedItem="{Binding SecondPlayerStrategy}"  ItemsSource="{Binding Source={StaticResource strategies}}" />
                     </Grid>
+                    <Grid Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Przeciwnik gracza: Gracz 2"/>
+                    </Grid>
                 </StackPanel>
             </GroupBox>
 

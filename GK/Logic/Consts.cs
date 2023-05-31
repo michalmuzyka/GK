@@ -9,10 +9,10 @@ namespace GK.Logic;
 
 public static class Consts
 {
-    public static int DefaultX = 10;
+    public static int DefaultX = 15;
     public static int DefaultK = 3;    
     public static int DefaultA = 1;
-    public static int DefaultB = DefaultX;
+    public static int DefaultB = 30;
 
     public static Color FirstPlayerColor = Colors.LightGreen;
     public static Color FirstPlayerWinningColor = Colors.Green;
@@ -21,4 +21,8 @@ public static class Consts
 
     public static string FirstPlayerName = "Gracz 1";
     public static string SecondPlayerName = "Gracz 2";
+
+    public static string RandomStrategyName = "Strategia Losowa";
+    public static string TwoStepStrategyName = "Strategia Dwu krokowa";
+    public static string BlockingStrategyName = "Strategia Blokująca";
 }
